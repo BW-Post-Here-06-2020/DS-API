@@ -15,6 +15,7 @@ requests = "*"
 fastapi = "*"
 pandas = "*"
 uvicorn = "*"
+praw = "*"
 
 [requires]
 python_version = "3.7"
