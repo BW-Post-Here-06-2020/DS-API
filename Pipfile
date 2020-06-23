@@ -16,6 +16,8 @@ fastapi = "*"
 pandas = "*"
 uvicorn = "*"
 praw = "*"
+python-dotenv = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"
