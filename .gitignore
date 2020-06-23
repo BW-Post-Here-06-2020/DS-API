@@ -1,10 +1,7 @@
-# ignore dev database stuff:
-migrations/
-twitoff_data.db
-/.vscode
-.vscode
-twitoff_data.db
-
+.DS_Store
+.env
+.ipynb_checkpoints
+.pytest_cache
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

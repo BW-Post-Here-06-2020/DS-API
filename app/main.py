@@ -5,8 +5,8 @@ import uvicorn
 from .routers import predict
 
 app = FastAPI(
-    title='DS API',
-    description='Lorem ipsum',
+    title='Post Here: Subreddit Predictor',
+    description='Finding the ideal subreddit for ones post',
     version='0.1',
     docs_url='/',
 )

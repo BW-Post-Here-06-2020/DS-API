@@ -1,6 +1,6 @@
 import logging
 import random
-
+import praw
 from fastapi import APIRouter
 import pandas as pd
 from pydantic import BaseModel, Field, validator
