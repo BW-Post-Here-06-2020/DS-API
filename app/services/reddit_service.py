@@ -1,6 +1,7 @@
 import praw
-from dotenv import load_dotenv
+from dotenv  import load_dotenv
 import os
+import pandas as pd
 
 # Load environmental 
 load_dotenv()
@@ -17,19 +18,27 @@ reddit = praw.Reddit(client_id=REDDIT_ID,
                      user_agent=REDDIT_USER_AGENT,
                      username=REDDIT_USERNAME)
 
+def subreddit_list():
+    df = pd.read_csv('allsubreddits.csv', engine='python', names=['subs','subreddit','nsfw'])
+    condition = df['nsfw'] == "nsfw=false"
+    df = df[condition]
+    df= df.nlargest(1000,'subs')
+    listofsubreddits = df['subreddit'].tolist()
+    return listofsubreddits
 
-# Set to read only mode
-reddit.read_only = True
-# If logged in, should return reddit username
-print(reddit.user.me())
-print("---")
 
-# Test print ten hot posts on all
-for submission in reddit.subreddit("All").hot(limit=10):
-    print(submission.title)
-    print("---")
+# # Set to read only mode
+# reddit.read_only = True
+# # If logged in, should return reddit username
+# print(reddit.user.me())
+# print("---")
 
-# {
-#     post: "test text"
-#     predictions: ["subreddit1", "subreddit2", "subreddit3"]
-# }
+# # Test print ten hot posts on all
+# for submission in reddit.subreddit("All").hot(limit=10):
+#     print(submission.title)
+#     print("---")
+
+# # {
+# #     post: "test text"
+# #     predictions: ["subreddit1", "subreddit2", "subreddit3"]
+# # }
