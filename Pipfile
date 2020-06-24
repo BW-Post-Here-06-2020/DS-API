@@ -15,9 +15,12 @@ requests = "*"
 fastapi = "*"
 pandas = "*"
 uvicorn = "*"
+
 praw = "*"
 python-dotenv = "*"
 requests = "*"
+
+pydantic = "*"
 tensorflow = "*"
 bert-for-tf2 = "*"
 

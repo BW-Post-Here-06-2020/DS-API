@@ -1,3 +1,9 @@
+
+.DS_Store
+.env
+.ipynb_checkpoints
+.pytest_cache
+
 # ignore dev database stuff:
 migrations/
 twitoff_data.db
