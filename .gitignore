@@ -5,6 +5,11 @@ twitoff_data.db
 .vscode
 twitoff_data.db
 
+# Ignore tsv/csv for modeling embeddings
+.tsv
+reddit_posts.tsv
+notebooks/dataset/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
