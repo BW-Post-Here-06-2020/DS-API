@@ -19,7 +19,10 @@ uvicorn = "*"
 praw = "*"
 python-dotenv = "*"
 requests = "*"
+
 pydantic = "*"
+tensorflow = "*"
+bert-for-tf2 = "*"
 
 [requires]
 python_version = "3.7"
