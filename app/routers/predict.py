@@ -4,9 +4,11 @@ import praw
 from fastapi import APIRouter
 import pandas as pd
 from pydantic import BaseModel, Field, validator
+# from reddit_service import subreddit_list
 
 log = logging.getLogger(__name__)
 router = APIRouter()
+
 
 
 class Item(BaseModel):
