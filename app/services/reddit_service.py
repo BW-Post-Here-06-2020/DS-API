@@ -30,6 +30,17 @@ def subreddit_list():
 
 # Create a csv of posts from the top 1000 SFW Subreddits
 
+conn = sqlite3.connect("Subredditposts.db")
+curs = conn.cursor()
+sql_command = """
+CREATE TABlE SubPosts{
+title str,
+subreddit str,
+url str,
+body str,
+};
+"""
+
 def subwithposts():
     posts = []
     sublist =  subreddit_list()
@@ -38,13 +49,12 @@ def subwithposts():
         for post in testposts:
             posts.append([post.title, post.subreddit, post.url, post.selftext])
         posts = pd.DataFrame(posts, columns=['title','subreddit','url','body'])
-    posts.to_csv('subwithposts.csv')        
-
-def subredditdatabase():
-    conn = sqlite3.connect("Subredditposts.db")
-    curs = conn.cursor()
-    sql_command = """
+    sql_command = """ INSERT INTO demo (title, subreddit, url, body)
     """
+    #posts.to_csv('subwithposts.csv')        
+
+
+
 # testposts = reddit.subreddit(subreddit_list).hot(limit=10)
 # for post in testposts:
 #     print(post.title)
