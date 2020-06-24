@@ -2,6 +2,7 @@ import praw
 from dotenv  import load_dotenv
 import os
 import pandas as pd
+import sqlite3
 
 # Load environmental 
 load_dotenv()
@@ -27,22 +28,29 @@ def subreddit_list():
     listofsubreddits = df['subreddit'].tolist()
     return listofsubreddits
 
+# Create a csv of posts from the top 1000 SFW Subreddits
 
+def subwithposts():
+    posts = []
+    sublist =  subreddit_list()
+    for derp in sublist:
+        testposts = reddit.subreddit(derp).hot(limit=10)#subreddit_list())
+        for post in testposts:
+            posts.append([post.title, post.subreddit, post.url, post.selftext])
+        posts = pd.DataFrame(posts, columns=['title','subreddit','url','body'])
+    posts.to_csv('subwithposts.csv')        
 
-
-# Set to read only mode
-reddit.read_only = True
-# If logged in, should return reddit username
-print(reddit.user.me())
-print("---")
-
-
-
-# Test print ten hot posts on all
-for submission in reddit.subreddit("All").hot(limit=10):
-    print(submission.title)
-    print("---")
-
+def subredditdatabase():
+    conn = sqlite3.connect("Subredditposts.db")
+    curs = conn.cursor()
+    sql_command = """
+    """
+# testposts = reddit.subreddit(subreddit_list).hot(limit=10)
+# for post in testposts:
+#     print(post.title)
+# def subredditposts():
+#     for submission in reddit.subreddit(subreddit_list['subs']).hot(limit=1000):
+#         print(submission.title)
 # {
 #     post: "test text"
 #     predictions: ["subreddit1", "subreddit2", "subreddit3"]
