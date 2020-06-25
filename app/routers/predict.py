@@ -12,7 +12,6 @@ router = APIRouter()
 class Item(BaseModel):
     """Use this data model to parse the request body JSON."""
 
-    title: str = Field(..., example= 'fuse dragons')
     post: str = Field(..., example= 'dragons are cool')
 
     def to_df(self):
