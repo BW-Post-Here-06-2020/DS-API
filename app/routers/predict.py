@@ -26,8 +26,6 @@ class Item(BaseModel):
         assert value > 0, f'x1 == {value}, must be > 0'
         return value
 
-@router.post
-
 @router.post('/predict')
 async def predict(item: Item):
     """Make random baseline predictions for classification problem."""
