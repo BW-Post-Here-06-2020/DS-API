@@ -28,31 +28,34 @@ def subreddit_list():
     listofsubreddits = df['subreddit'].tolist()
     return listofsubreddits
 
-# Create a csv of posts from the top 1000 SFW Subreddits
-
-conn = sqlite3.connect("Subredditposts.db")
+# Create a sqlite3 database of posts from the top 1000 SFW Subreddits
+conn = sqlite3.connect("Subredditposts.sqlite3")
 curs = conn.cursor()
-sql_command = """
-CREATE TABlE SubPosts{
+sql_command1 = """
+CREATE TABLE subposts (
 title str,
 subreddit str,
 url str,
-body str,
-};
-"""
+body str
+);"""
+
+curs.execute(sql_command1)
 
 def subwithposts():
     posts = []
     sublist =  subreddit_list()
-    for derp in sublist:
-        testposts = reddit.subreddit(derp).hot(limit=10)#subreddit_list())
+    for i in sublist:
+        testposts = reddit.subreddit(i)#subreddit_list())
         for post in testposts:
             posts.append([post.title, post.subreddit, post.url, post.selftext])
         posts = pd.DataFrame(posts, columns=['title','subreddit','url','body'])
-    sql_command = """ INSERT INTO demo (title, subreddit, url, body)
-    """
+    conn.execute(""" INSERT INTO subposts (title, subreddit, url, body)
+    VALUES (?, ?, ?, ?)
+    """, posts)
+    conn.commit()
     #posts.to_csv('subwithposts.csv')        
 
+subwithposts()
 
 
 # testposts = reddit.subreddit(subreddit_list).hot(limit=10)
