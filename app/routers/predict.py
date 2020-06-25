@@ -11,8 +11,9 @@ router = APIRouter()
 
 class Item(BaseModel):
     """Use this data model to parse the request body JSON."""
-
+    title: str = Field(..., example= 'I like Dragon Ball Z'
     post: str = Field(..., example= 'dragons are cool')
+    
 
     def to_df(self):
         """Convert pydantic object to pandas dataframe with 1 row."""
