@@ -2,6 +2,7 @@ import praw
 from dotenv  import load_dotenv
 import os
 import pandas as pd
+import sqlite3
 
 # Load environmental 
 load_dotenv()
@@ -18,6 +19,7 @@ reddit = praw.Reddit(client_id=REDDIT_ID,
                      user_agent=REDDIT_USER_AGENT,
                      username=REDDIT_USERNAME)
 
+# Create a list of top 1000 SFW Subreddits
 def subreddit_list():
     df = pd.read_csv('allsubreddits.csv', engine='python', names=['subs','subreddit','nsfw'])
     condition = df['nsfw'] == "nsfw=false"
@@ -26,19 +28,43 @@ def subreddit_list():
     listofsubreddits = df['subreddit'].tolist()
     return listofsubreddits
 
+# Create a sqlite3 database of posts from the top 1000 SFW Subreddits
+conn = sqlite3.connect("Subredditposts.sqlite3")
+curs = conn.cursor()
+# sql_command1 = """
+# CREATE TABLE subposts (
+# title str,
+# subreddit str,
+# url str,
+# body str
+# );"""
 
-# # Set to read only mode
-# reddit.read_only = True
-# # If logged in, should return reddit username
-# print(reddit.user.me())
-# print("---")
+# curs.execute(sql_command1)
 
-# # Test print ten hot posts on all
-# for submission in reddit.subreddit("All").hot(limit=10):
-#     print(submission.title)
-#     print("---")
+def subwithposts():
+    posts = []
+    sublist =  subreddit_list()
+    for i in sublist:
+        testposts = reddit.subreddit(i).hot(limit=1000)#subreddit_list())
+        for post in testposts:
+            posts.append([post.title, post.subreddit, post.url, post.selftext])
+        posts = pd.DataFrame(posts, columns=['title','subreddit','url','body'])
+    conn.execute(""" INSERT INTO subposts (title, subreddit, url, body)
+    VALUES (?, ?, ?, ?)
+    """, posts) 
+conn.commit()
+conn.close
 
-# # {
-# #     post: "test text"
-# #     predictions: ["subreddit1", "subreddit2", "subreddit3"]
-# # }
+subwithposts()
+
+
+# testposts = reddit.subreddit(subreddit_list).hot(limit=10)
+# for post in testposts:
+#     print(post.title)
+# def subredditposts():
+#     for submission in reddit.subreddit(subreddit_list['subs']).hot(limit=1000):
+#         print(submission.title)
+# {
+#     post: "test text"
+#     predictions: ["subreddit1", "subreddit2", "subreddit3"]
+# }
