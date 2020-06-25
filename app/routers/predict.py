@@ -12,19 +12,18 @@ router = APIRouter()
 class Item(BaseModel):
     """Use this data model to parse the request body JSON."""
 
-    x1: float = Field(..., example=3.14)
-    x2: int = Field(..., example=-42)
-    x3: str = Field(..., example='banjo')
+    title: str = Field(..., example= 'fuse dragons')
+    post: str = Field(..., example= 'dragons are cool')
 
     def to_df(self):
         """Convert pydantic object to pandas dataframe with 1 row."""
         return pd.DataFrame([dict(self)])
 
-    @validator('x1')
-    def x1_must_be_positive(cls, value):
-        """Validate that x1 is a positive number."""
-        assert value > 0, f'x1 == {value}, must be > 0'
-        return value
+    # @validator('x1')
+    # def x1_must_be_positive(cls, value):
+    #     """Validate that x1 is a positive number."""
+    #     assert value > 0, f'x1 == {value}, must be > 0'
+    #     return value
 
 @router.post('/predict')
 async def predict(item: Item):

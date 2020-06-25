@@ -38,9 +38,9 @@ def test_invalid_input():
     response = client.post(
         '/predict',
         json={
-            'x1': -3.14,
-            'x2': -42,
-            'x3': 'banjo'
+            'title':x,
+            'post': -42,
+            
         }
     )
     body = response.json()
