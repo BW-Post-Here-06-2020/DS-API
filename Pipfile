@@ -15,11 +15,9 @@ requests = "*"
 fastapi = "*"
 pandas = "*"
 uvicorn = "*"
-praw = "*"
 python-dotenv = "*"
 requests = "*"
 pydantic = "*"
-random = "*"
 scikit-learn = "*"
 
 [requires]
