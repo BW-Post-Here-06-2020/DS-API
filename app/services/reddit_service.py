@@ -20,15 +20,19 @@ reddit = praw.Reddit(client_id=REDDIT_ID,
                      username=REDDIT_USERNAME)
 
 # Create a list of top 1000 SFW Subreddits
+
+
 def subreddit_list():
-    df = pd.read_csv('allsubreddits.csv', engine='python', names=['subs','subreddit','nsfw'])
+    df = pd.read_csv('allsubreddits.csv', engine='python', names=['subs' ,'subreddit', 'nsfw'])
     condition = df['nsfw'] == "nsfw=false"
     df = df[condition]
-    df= df.nlargest(1000,'subs')
+    df = df.nlargest(1000, 'subs')
     listofsubreddits = df['subreddit'].tolist()
     return listofsubreddits
 
 # Create a sqlite3 database of posts from the top 1000 SFW Subreddits
+
+
 conn = sqlite3.connect("Subredditposts.sqlite3")
 curs = conn.cursor()
 # sql_command1 = """
@@ -41,17 +45,20 @@ curs = conn.cursor()
 
 # curs.execute(sql_command1)
 
+
 def subwithposts():
     posts = []
-    sublist =  subreddit_list()
+    sublist = subreddit_list()
     for i in sublist:
-        testposts = reddit.subreddit(i).hot(limit=1000)#subreddit_list())
+        testposts = reddit.subreddit(i).hot(limit=1)  #subreddit_list())
         for post in testposts:
             posts.append([post.title, post.subreddit, post.url, post.selftext])
         posts = pd.DataFrame(posts, columns=['title','subreddit','url','body'])
     conn.execute(""" INSERT INTO subposts (title, subreddit, url, body)
     VALUES (?, ?, ?, ?)
     """, posts) 
+
+
 conn.commit()
 conn.close
 
