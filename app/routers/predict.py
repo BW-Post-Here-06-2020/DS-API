@@ -49,7 +49,7 @@ async def predict(item: Item):
     preds = [subreddit_list[x] for x,_ in preds[:10]]
 
     return {
-        # 'title': item.title,
-        # 'body': item.body,
+        'title': item.title,
+        'body': item.body,
         'prediction': preds        
     }
