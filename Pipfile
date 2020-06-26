@@ -20,7 +20,7 @@ python-dotenv = "*"
 requests = "*"
 pydantic = "*"
 random = "*"
-
+scikit-learn = "*"
 
 [requires]
 python_version = "3.7"

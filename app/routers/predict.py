@@ -5,6 +5,7 @@ import pickle
 import bz2
 import _pickle as cPickle
 import praw
+import sklearn
 from fastapi import APIRouter
 import pandas as pd
 from pydantic import BaseModel, Field, validator
